@@ -7,6 +7,11 @@ import scala.io.Source
 object SimpleCaller {
   var ref = null;
 
+  def runSimpleCaller(ref: GenomePiece, reads: String): Set = {
+    val vc = SparkSimpleVC(ref, reads).run()
+    return vc.snpsset.toIndexedSeq
+  }
+
   def main(args: Array[String]) {
     //dead simple first version
     val sc = new SparkContext("local", "SimpleCaller", "/home/eecs/jnewcomb/spark-0.7.0", 
@@ -15,9 +20,14 @@ object SimpleCaller {
     //val accum = sc.accumulable(0)
 
     val reads = sc.textFile(args(0))
+    val ref = FASTA.read(args(1))
+    val broadcastRef = sc.broadcast(ref.pieces(0))
+    val curriedSimpleCaller = Function.curried(runSimpleCaller _)
+    val snps = reads.flatMap(curriedSimpleCaller(broadcastRef))
 
-    val count = reads.filter(!_.startsWith("@")).map(SamParse.parse).distinct().count()
-    println(count)
+    // val count = reads.filter(!_.startsWith("@")).map(SamParse.parse).distinct().count()
+    // println(count)
+    println("Done")
 
     //args(0) reference
     //args(1) read file
