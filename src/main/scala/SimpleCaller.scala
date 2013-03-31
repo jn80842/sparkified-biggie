@@ -9,11 +9,9 @@ object SimpleCaller {
   def main(args: Array[String]) {
     //dead simple first version
     val sc = new SparkContext("local", "SimpleCaller", "/data/spark-0.7.0")
-    val refFile = new File(args(0))
-    ref = sc.broadcast(refFile)
 
     val reads = SAM.read(args(1))
-    val readSeq = reads.toIndexSeq()
+    val readSeq = reads.toIndexedSeq
     val readRDD = sc.parallelize(readSeq)
 
     val count = readRDD.count()
