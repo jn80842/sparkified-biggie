@@ -2,6 +2,7 @@ package biggiesparks
 
 import spark.{SparkContext,RDD}
 import snap._
+import scala.io.Source
 
 object SimpleCaller {
   var ref = null;
@@ -10,9 +11,9 @@ object SimpleCaller {
     //dead simple first version
     val sc = new SparkContext("local", "SimpleCaller", "/data/spark-0.7.0", List("target/scala-2.9.2/sparkifiedbiggie_2.9.2-0.0.1.jar"))
 
-    val reads = SAM.read(args(0))
-    val readSeq = reads.toIndexedSeq
-    val readRDD = sc.parallelize(readSeq)
+    val lines = Source.fromFile(file).getLines.toIndexedSeq
+
+    val readRDD = sc.parallelize(lines)
 
     val count = readRDD.count()
     println(count)
