@@ -8,7 +8,7 @@ object SimpleCaller {
 
   def main(args: Array[String]) {
     //dead simple first version
-    val sc = new SparkContext("local", "SimpleCaller", "/data/spark-0.7.0", List("target/scala-2.9.2/sparkified-biggie.jar"))
+    val sc = new SparkContext("local", "SimpleCaller", "/data/spark-0.7.0", List("target/scala-2.9.2/sparkifiedbiggie_2.9.2-0.0.1.jar"))
 
     val reads = SAM.read(args(1))
     val readSeq = reads.toIndexedSeq
