@@ -9,13 +9,12 @@ object SimpleCaller {
 
   def main(args: Array[String]) {
     //dead simple first version
-    val sc = new SparkContext("local", "SimpleCaller", "../spark-0.7.0", List("target/scala-2.9.2/sparkifiedbiggie_2.9.2-0.0.1.jar"))
+    val sc = new SparkContext("local", "SimpleCaller", "/home/eecs/jnewcomb/spark-0.7.0", 
+      List("target/scala-2.9.2/sparkifiedbiggie_2.9.2-0.0.1.jar"))
 
-    val lines = Source.fromFile(args(0)).getLines.toIndexedSeq
+    val reads = sc.textFile(args(0))
 
-    val readRDD = sc.parallelize(lines)
-
-    val count = readRDD.count()
+    val count = reads.count()
     println(count)
 
     //args(0) reference
