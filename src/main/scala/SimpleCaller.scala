@@ -16,7 +16,7 @@ object SimpleCaller {
 
     val reads = sc.textFile(args(0))
 
-    val count = reads.filter(!_.startsWith("@")).count()
+    val count = reads.filter(!_.startsWith("@")).map(SamParse.parse).distinct().count()
     println(count)
 
     //args(0) reference
