@@ -8,7 +8,7 @@ object SimpleCaller {
   var ref = null;
 
   def runSimpleCaller(ref: GenomePiece, reads: String): Set = {
-    val vc = SparkSimpleVC(ref, reads).run()
+    val vc = snap.SparkSimpleVC(ref, reads).run()
     return vc.snpsset.toIndexedSeq
   }
 
