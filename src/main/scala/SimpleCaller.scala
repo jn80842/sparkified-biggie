@@ -7,8 +7,8 @@ import scala.io.Source
 object SimpleCaller {
   var ref = null;
 
-  def runSimpleCaller(ref: GenomePiece, reads: String): Set = {
-    val vc = snap.SparkSimpleVC(ref, reads).run()
+  def runSimpleCaller(ref: GenomePiece, reads: String): IndexedSeq = {
+    val vc = new SparkSimpleVC(ref, reads).run()
     return vc.snpsset.toIndexedSeq
   }
 
@@ -23,7 +23,7 @@ object SimpleCaller {
     val ref = FASTA.read(args(1))
     val broadcastRef = sc.broadcast(ref.pieces(0))
     val curriedSimpleCaller = Function.curried(runSimpleCaller _)
-    val snps = reads.flatMap(curriedSimpleCaller(broadcastRef))
+    val snps = reads.flatMap(curriedSimpleCaller(broadcastRef.value))
 
     // val count = reads.filter(!_.startsWith("@")).map(SamParse.parse).distinct().count()
     // println(count)
