@@ -25,10 +25,10 @@ object SimpleCaller {
     val broadcastRef = sc.broadcast(ref.pieces(0))
     val curriedSimpleCaller = Function.curried(runSimpleCaller _)
     val snps = reads.flatMap(curriedSimpleCaller(broadcastRef.value))
-
+    val count = snps.count()
     // val count = reads.filter(!_.startsWith("@")).map(SamParse.parse).distinct().count()
     // println(count)
-    println("Done")
+    println(count)
 
     //args(0) reference
     //args(1) read file
