@@ -22,9 +22,9 @@ object SimpleCaller {
     val reads = sc.textFile(args(0))
     val ref = FASTA.read(args(1))
     val broadcastRef = sc.broadcast(ref.pieces(0))
-    val curriedSimpleCaller = Function.curried(runSimpleCaller _)
-    val snps = reads.flatMap(curriedSimpleCaller(broadcastRef.value))
-    val count = snps.count()
+
+    val count = reads.flatMap(runSimpleCaller(broadcastRef.value, _)).count()
+    //val count = snps.count()
     // val count = reads.filter(!_.startsWith("@")).map(SamParse.parse).distinct().count()
     // println(count)
     println(count)
