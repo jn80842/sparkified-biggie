@@ -19,8 +19,9 @@ object SimpleCaller {
 
     //val accum = sc.accumulable(0)
 
-    val reads = sc.textFile(args(0)).filter(!_.startsWith("@"))
-    println(reads.first())
+    val reads = sc.textFile(args(0)).filter(!_.startsWith("@")).map(SamParse.parse)
+    val entry = reads.first()
+    println(entry.cigar)
     //val ref = FASTA.read(args(1))
     //val broadcastRef = sc.broadcast(ref.pieces(0))
 
