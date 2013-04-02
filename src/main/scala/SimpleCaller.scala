@@ -16,7 +16,7 @@ object SimpleCaller {
   def main(args: Array[String]) {
     //dead simple first version
     val sc = new SparkContext("local", "SimpleCaller", "/home/eecs/jnewcomb/spark-0.7.0", 
-      List("/home/eecs/jnewcomb/sparkified-biggie/target/scala-2.9.2/sparkifiedbiggie_2.9.2-0.0.1.jar"))
+      List("target/scala-2.9.2/sparkifiedbiggie_2.9.2-0.0.1.jar"))
 
     //val accum = sc.accumulable(0)
 
