@@ -19,7 +19,7 @@ object SimpleCaller {
 
     //val accum = sc.accumulable(0)
 
-    val reads = sc.textFile(args(0)).filter(!_.startsWith("@")).map(SamParse.parse)
+    val reads = sc.textFile(args(0)).filter(!_.startsWith("@")).map(snap.SAM.parseEntry)
     val entry = reads.first()
     println(entry.cigar)
     //val ref = FASTA.read(args(1))
