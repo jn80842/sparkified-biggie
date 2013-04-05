@@ -7,7 +7,7 @@ import scala.io.Source
 object SimplerCaller {
   var ref = null;
 
-  def runSimpleCaller(ref: GenomePiece, reads: String): IndexedSeq[SNP] = {
+  def runSimpleCaller(ref: GenomePiece, reads: Array[String]): IndexedSeq[SNP] = {
     val vc = new SparkSimpleVC(ref, reads)
     vc.run()
     return vc.snpsset.toIndexedSeq
@@ -22,7 +22,7 @@ object SimplerCaller {
     val ref = FASTA.read(args(1))
     val broadcastRef = sc.broadcast(ref.pieces(0))
 
-    val reads = sc.textFile(args(0)).glom().reduce((s1,s2) => s1 + s2).flatMap(runSimpleCaller(broadcastRef.value, _))
+    val reads = sc.textFile(args(0)).filter(!_.startsWith("@")).glom().flatMap(runSimpleCaller(broadcastRef.value, _))
     println(reads.count())
 
     //val count = reads.flatMap(runSimpleCaller(broadcastRef.value, _)).count()
