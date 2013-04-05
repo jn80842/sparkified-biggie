@@ -7,11 +7,6 @@ import scala.io.Source
 object SimpleCaller {
   var ref = null;
 
-  def runSimpleCaller(ref: GenomePiece, reads: String): IndexedSeq[SNP] = {
-    val vc = new SparkSimpleVC(ref, reads)
-    vc.run()
-    return vc.snpsset.toIndexedSeq
-  }
 
   def main(args: Array[String]) {
     //dead simple first version
