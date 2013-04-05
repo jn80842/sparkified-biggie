@@ -20,7 +20,7 @@ object SimpleCaller {
     //val accum = sc.accumulable(0)
 
     val reads = sc.textFile(args(0)).filter(!_.startsWith("@")).flatMap(SamParse.parse(_))
-    println(entry)
+    println(reads.first)
     //val ref = FASTA.read(args(1))
     //val broadcastRef = sc.broadcast(ref.pieces(0))
 
