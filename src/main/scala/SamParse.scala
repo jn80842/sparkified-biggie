@@ -25,7 +25,7 @@ object SamParse {
           case '=' =>
             var i = 0
             while (i < count) {
-              val base = BASE_TO_CODE(read.sequence.charAt(posInRead + i))
+              val base = DNA.BASE_TO_CODE(read.sequence.charAt(posInRead + i))
               if (base != 'N') {
                 coverage.add((posInRef + i, 1))
               }
@@ -35,7 +35,7 @@ object SamParse {
             var i = 0
             while (i < count) {
               if (Utils.parsePhred(read.quality.charAt(posInRead + i)) >= MIN_PHRED) {
-                val base = BASE_TO_CODE(read.sequence.charAt(posInRead + i))
+                val base = DNA.BASE_TO_CODE(read.sequence.charAt(posInRead + i))
                 if (base != 'N') {
                   coverage.add((posInRef + i, 1))
                 }
@@ -46,7 +46,7 @@ object SamParse {
             var i = 0
             while (i < count) {
               if (Utils.parsePhred(read.quality.charAt(posInRead + i)) >= MIN_PHRED) {
-                val base = BASE_TO_CODE(read.sequence.charAt(posInRead + i))
+                val base = DNA.BASE_TO_CODE(read.sequence.charAt(posInRead + i))
                 if (base != 'N') {
                   coverage.add((posInRef + i, 1))
                 }
