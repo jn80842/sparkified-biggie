@@ -37,7 +37,7 @@ object SamParse {
               if (Utils.parsePhred(read.quality.charAt(posInRead + i)) >= MIN_PHRED) {
                 val base = BASE_TO_CODE(read.sequence.charAt(posInRead + i))
                 if (base != 'N') {
-                  coverage.add(posInRef + i, 1))
+                  coverage.add((posInRef + i, 1))
                 }
                 i += 1
               }
@@ -48,7 +48,7 @@ object SamParse {
               if (Utils.parsePhred(read.quality.charAt(posInRead + i)) >= MIN_PHRED) {
                 val base = BASE_TO_CODE(read.sequence.charAt(posInRead + i))
                 if (base != 'N') {
-                  coverage.add(posInRef + i, 1))
+                  coverage.add((posInRef + i, 1))
                 }
                 i += 1
               }
