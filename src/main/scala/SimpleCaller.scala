@@ -19,8 +19,7 @@ object SimpleCaller {
 
     //val accum = sc.accumulable(0)
 
-    val reads = sc.textFile(args(0)).filter(!_.startsWith("@")).flatMap(SamParse.parse(_)).groupBy((x: Int, y: Int) => x, 200).map((x: Int, y: HashSet) => (x, y.sum()))
-    val entry = reads.first()
+    val reads = sc.textFile(args(0)).filter(!_.startsWith("@")).flatMap(SamParse.parse(_))
     println(entry)
     //val ref = FASTA.read(args(1))
     //val broadcastRef = sc.broadcast(ref.pieces(0))
