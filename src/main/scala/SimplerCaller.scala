@@ -4,7 +4,7 @@ import spark.{SparkContext,RDD}
 import snap._
 import scala.io.Source
 
-object SimpleCaller {
+object SimplerCaller {
   var ref = null;
 
   def runSimpleCaller(ref: GenomePiece, reads: String): IndexedSeq[SNP] = {
@@ -19,10 +19,11 @@ object SimpleCaller {
 
     //val accum = sc.accumulable(0)
 
-    val reads = sc.textFile(args(0)).filter(!_.startsWith("@")).flatMap(SamParse.parse(_)).groupBy(_._1).map( { case (k,v) => (k,v.map(_._2).reduceLeft(_ + _)})
-    println(reads.first)
-    //val ref = FASTA.read(args(1))
-    //val broadcastRef = sc.broadcast(ref.pieces(0))
+    val ref = FASTA.read(args(1))
+    val broadcastRef = sc.broadcast(ref.pieces(0))
+
+    val reads = sc.textFile(args(0)).glom().reduce(_ + _).flatMap(runSimpleCaller(broadcastRef.val, _))
+    println(reads.count())
 
     //val count = reads.flatMap(runSimpleCaller(broadcastRef.value, _)).count()
     //val count = snps.count()
