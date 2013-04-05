@@ -22,7 +22,7 @@ object SimplerCaller {
     val ref = FASTA.read(args(1))
     val broadcastRef = sc.broadcast(ref.pieces(0))
 
-    val reads = sc.textFile(args(0)).glom().reduce(_ + _).flatMap(runSimpleCaller(broadcastRef.val, _))
+    val reads = sc.textFile(args(0)).glom().reduce(_ + _).flatMap(runSimpleCaller(broadcastRef.value, _))
     println(reads.count())
 
     //val count = reads.flatMap(runSimpleCaller(broadcastRef.value, _)).count()
