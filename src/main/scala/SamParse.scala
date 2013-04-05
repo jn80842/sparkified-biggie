@@ -10,14 +10,14 @@ object SamParse {
   val MIN_PHRED = 30              // Ignore bases mapped with score lower than this.
 
   def parse(line: String): HashSet[(Int, Int)] = {
-    val entry = snap.SAM.parseEntry(line)
+    val read = snap.SAM.parseEntry(line)
     val coverage = new HashSet[(Int, Int)]
-    val readPos = entry.position
-    if (shouldIgnoreRead(entry)) {
+    val readPos = read.position
+    if (shouldIgnoreRead(read)) {
       //do stuff later
     } else {
-      posInRead = 0
-      posInRef = readPos
+      var posInRead = 0
+      var posInRef = readPos
       for ((count, op) <- parseCigar(read.cigar)) {
         op match {
           case 'S' =>
@@ -66,7 +66,7 @@ object SamParse {
   }
 
     def shouldIgnoreRead(read: SAMEntry): Boolean = {
-    if (read.mapQuality < READ_QUALITY_THRESHOLD || read.piece != reference.name) {
+    if (read.mapQuality < READ_QUALITY_THRESHOLD) { //should also check ref name when we have it
       return true
     }
     var amountClipped = 0
