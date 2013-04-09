@@ -3,11 +3,12 @@ package biggiesparks
 import spark.{SparkContext,RDD}
 import snap._
 import scala.io.Source
+import scala.collection.mutable.HashSet
 
 object SimplerCaller {
   var ref = null;
 
-  def runSimpleCaller(ref: GenomePiece, reads: Array[String]): IndexedSeq[SNP] = {
+  def runSimpleCaller(ref: GenomePiece, reads: Array[String]): HashSet[(Int, SNP)] = {
     val vc = new SparkSimpleVC(ref, reads)
     vc.run()
     return vc.diffsnps
