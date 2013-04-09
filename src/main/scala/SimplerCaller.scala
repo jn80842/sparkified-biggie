@@ -27,7 +27,7 @@ object SimplerCaller {
     val diffsnps = sc.textFile(args(0), 10).filter(!_.startsWith("@")).glom().flatMap(runSimpleCaller(broadcastRef.value, _))
     //println(reads.count())
     val true_snps = TVSim.readSNPsToSeq(args(2))
-    Utils.scoreDiffSnpsOnly(diffsnps, true_snps)
+    Utils.scoreDiffSnpsOnly(diffsnps.toArray, true_snps)
 
     //val count = reads.flatMap(runSimpleCaller(broadcastRef.value, _)).count()
     //val count = snps.count()
