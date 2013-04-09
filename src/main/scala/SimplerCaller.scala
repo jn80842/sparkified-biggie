@@ -16,7 +16,7 @@ object SimplerCaller {
 
   def main(args: Array[String]) {
     //dead simple first version
-    val sc = new SparkContext("local", "SimpleCaller")
+    val sc = new SparkContext("local[16]", "SimpleCaller")
 
     //val accum = sc.accumulable(0)
     //read in sam file as array of strings split by \n
